@@ -1,0 +1,34 @@
+name: Build & Push Project1 Docker Image
+
+on:
+  push:
+    paths:
+      - 'nginx/Dockerfile'
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image from project1/
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}-neginx:latest ./nginx
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository }}-nginx:latest
