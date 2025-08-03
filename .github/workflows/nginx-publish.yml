@@ -27,7 +27,7 @@ jobs:
 
       - name: Build Docker image from project1/
         run: |
-          docker build -t ghcr.io/${{ github.repository }}-neginx:latest ./nginx
+          docker build -t ghcr.io/${{ github.repository }}-nginx:latest ./nginx
 
       - name: Push Docker image
         run: |
