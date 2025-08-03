@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'nginx/Dockerfile'
+      - '.github/workflows/nginx-publish.yml'
     branches: [ main ]
 
 jobs:
