@@ -1,2 +1,0 @@
-ARG NODE_TAG=20-alpine
-FROM node:${NODE_TAG}
