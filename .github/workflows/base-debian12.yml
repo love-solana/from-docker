@@ -6,6 +6,7 @@ on:
     paths:
       - 'base-debian12/Dockerfile'
       - 'base-debian12/**'
+      - '.github/workflows/base-debian12.yml'
 
 jobs:
   build-and-push:
