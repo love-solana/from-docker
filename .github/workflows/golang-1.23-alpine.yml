@@ -6,6 +6,7 @@ on:
     paths:
       - 'golang-1.23-alpine/Dockerfile'
       - 'golang-1.23-alpine/**'
+      - '.github/workflows/golang-1.23-alpine.yml'
 
 jobs:
   build-and-push:
@@ -28,7 +29,7 @@ jobs:
 
       - name: Build Docker image from node/
         run: |
-          docker build -t ghcr.io/${{ github.repository }}-golang:1.23-alpine:latest ./golang-1.23-alpine
+          docker build -t ghcr.io/${{ github.repository }}-golang-1.23-alpine:latest ./golang-1.23-alpine
 
       - name: Push Docker image
         run: |
