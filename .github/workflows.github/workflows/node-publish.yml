@@ -1,0 +1,33 @@
+name: Build & Push Node Image (20-alpine)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'node/**'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image with Node 20-alpine
+        run: |
+          docker build \
+            --build-arg NODE_TAG=20-alpine \
+            -t ghcr.io/${{ github.repository }}-node:20-alpine \
+            ./node
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository }}-node:20-alpine
