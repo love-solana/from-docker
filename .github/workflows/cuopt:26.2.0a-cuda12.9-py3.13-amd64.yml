@@ -1,0 +1,34 @@
+name: Build & Push cuopt Docker Image
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'cuopt-26.2.0a/Dockerfile' 
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image from nvidia/cuopt:26.2.0a-cuda12.9-py3.13-amd64/
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}-cuopt-26.2.0a:latest ./cuopt
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository }}-cuopt-26.2.0a:latest
